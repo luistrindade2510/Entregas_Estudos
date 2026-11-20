@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luis | Analista de Dados Júnior - Seguros & Saúde</title>
+  <meta name="description" content="Portfólio de dados de Luis: 13 projetos práticos em seguros e saúde suplementar utilizando dados da ANS, SUSEP e IBGE.">
+  <style>
+    /* ==========================================================================
+       1. Variáveis e Reset Geral
+       ========================================================================== */
+    :root {
+      --bg-body: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-alt: #f1f5f9;
+      --text-main: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --border: #e2e8f0;
+      --badge-done-bg: #ecfdf5;
+      --badge-done-text: #047857;
+      --badge-done-border: #a7f3d0;
+      --badge-prog-bg: #fffbeb;
+      --badge-prog-text: #b45309;
+      --badge-prog-border: #fde68a;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-hover: 0 12px 20px -3px rgba(0, 0, 0, 0.09), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --transition-normal: 0.2s ease-in-out;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       2. Layout e Containers
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 4.5rem 0;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--primary);
+      background-color: var(--primary-light);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 2.125rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.025em;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ==========================================================================
+       3. Cabeçalho e Navegação
+       ========================================================================== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 4rem;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color var(--transition-normal);
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    /* ==========================================================================
+       4. Apresentação (Hero)
+       ========================================================================== */
+    .hero {
+      padding: 5.5rem 0 4.5rem;
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-content {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-greeting {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      background-color: var(--primary-light);
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-lead {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--bg-surface-alt);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       5. Sobre Mim
+       ========================================================================== */
+    .about-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text:last-of-type {
+      margin-bottom: 2rem;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-item {
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .highlight-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .highlight-desc {
+      font-size: 0.925rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       6. Grade com 13 Cards de Projetos
+       ========================================================================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .project-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: #cbd5e1;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 0.5rem;
+    }
+
+    .card-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Selos de Status */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      line-height: 1;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .badge-progress {
+      background-color: var(--badge-prog-bg);
+      color: var(--badge-prog-text);
+      border-color: var(--badge-prog-border);
+    }
+
+    .badge-progress::before {
+      background-color: #f59e0b;
+    }
+
+    .badge-done {
+      background-color: var(--badge-done-bg);
+      color: var(--badge-done-text);
+      border-color: var(--badge-done-border);
+    }
+
+    .badge-done::before {
+      background-color: #10b981;
+    }
+
+    .card-content {
+      margin-bottom: 1.5rem;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+      line-height: 1.35;
+    }
+
+    .project-desc {
+      font-size: 0.925rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-main);
+      background-color: var(--bg-surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .btn-github:hover {
+      background-color: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .btn-github svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* ==========================================================================
+       7. Contatos
+       ========================================================================== */
+    .contact-section {
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-container {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.75rem;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background-color: var(--bg-surface-alt);
+      color: var(--text-main);
+      transition: all var(--transition-normal);
+    }
+
+    .contact-btn:hover {
+      background-color: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* ==========================================================================
+       8. Rodapé
+       ========================================================================== */
+    .footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       9. Responsividade
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.25rem;
+      }
+
+      .hero-lead {
+        font-size: 1.1rem;
+      }
+
+      .about-card {
+        padding: 1.75rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        flex-direction: column;
+      }
+
+      .contact-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Cabeçalho / Barra de Navegação
+       ========================================================================== -->
+  <header class="header">
+    <div class="container nav">
+      <a href="#" class="logo">
+        Luis<span>.Data</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#sobre" class="nav-link">Sobre Mim</a></li>
+        <li><a href="#projetos" class="nav-link">Projetos</a></li>
+        <li><a href="#contato" class="nav-link">Contatos</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Seção 1: Apresentação (Hero)
+       ========================================================================== -->
+  <section class="hero" id="inicio">
+    <div class="container hero-content">
+      <div class="hero-greeting">
+        <span>👋</span> Olá, meu nome é Luis
+      </div>
+      <h1 class="hero-title">
+        Analista de Dados Júnior focado em <span>Seguros & Saúde</span>
+      </h1>
+      <p class="hero-lead">
+        Transformo dados públicos e operacionais de saúde suplementar e do mercado segurador (ANS, SUSEP e IBGE) em análises de sinistralidade, precificação e diagnósticos acionáveis para tomadas de decisão.
+      </p>
+      <div class="hero-actions">
+        <a href="#projetos" class="btn btn-primary">
+          Explorar Projetos
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+        </a>
+        <a href="#contato" class="btn btn-outline">
+          Entrar em Contato
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Seção 2: Sobre Mim
+       ========================================================================== -->
+  <section id="sobre">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Perfil</span>
+        <h2 class="section-title">Sobre Mim</h2>
+        <p class="section-subtitle">
+          Aliando rigor analítico, exploração estatística e entendimento aprofundado dos ecossistemas de saúde suplementar e securitário.
+        </p>
+      </div>
+
+      <div class="about-card">
+        <p class="about-text">
+          Sou analista de dados júnior dedicado ao estudo contínuo dos setores de saúde suplementar e seguros no Brasil. Minha abordagem analítica combina a exploração rigorosa de microdados abertos e regulatórios (ANS, SUSEP, DataSUS, IBGE) com o desenvolvimento de métricas essenciais de negócio, como cálculo de sinistralidade (loss ratio), precificação e dispersão etária de mensalidades.
+        </p>
+        <p class="about-text">
+          Com este portfólio prático de 13 entregas estruturadas, aplico na prática consultas SQL otimizadas, scripts de engenharia de dados em Python, criação de dashboards estratégicos e modelagem estatística para gerar clareza em cenários complexos de saúde e seguros.
+        </p>
+
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <div class="highlight-title">🎯 Foco Setorial</div>
+            <p class="highlight-desc">Saúde Suplementar (ANS), Mercado Segurador (SUSEP) e Indicadores Macroeconômicos (IBGE).</p>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">🛠️ Stack Técnica</div>
+            <p class="highlight-desc">SQL, Python (Pandas, NumPy), Power BI, Estatística Aplicada, Pipelines ETL e Git/GitHub.</p>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">📊 Competências Analíticas</div>
+            <p class="highlight-desc">Análise de Sinistralidade, Precificação por Faixas Etárias, Testes A/B e Modelagem Relacional.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Seção 3: Grade com 13 Cards de Projetos
+       ========================================================================== -->
+  <section id="projetos">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Portfólio Prático</span>
+        <h2 class="section-title">Projetos de Dados</h2>
+        <p class="section-subtitle">
+          Ciclo de 13 entregas práticas desenvolvidas quinzenalmente, aplicando técnicas de análise exploratória, SQL, modelagem e visualização de dados.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Projeto 01 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Web & Portfólio</span>
+            <span class="badge badge-done">Concluído</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">01. Portfólio de Projetos</h3>
+            <p class="project-desc">Website responsivo desenvolvido para documentar e apresentar entregas analíticas em seguros e saúde.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-01-portfolio" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 02 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Economia & Inflação</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">02. IPCA e Inflação Médica</h3>
+            <p class="project-desc">Análise histórica do IPCA e sua correlação com custos assistenciais e reajustes na saúde suplementar.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-02-ipca" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 03 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">ANS & Demografia</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">03. Beneficiários da ANS</h3>
+            <p class="project-desc">Mapeamento da evolução temporal, pirâmide etária e distribuição territorial de usuários de planos de saúde.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-03-ans-beneficiarios" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 04 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">ANS & Mercado</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">04. Operadoras da ANS</h3>
+            <p class="project-desc">Diagnóstico estrutural e concentração de mercado das operadoras médico-hospitalares e odontológicas ativas.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-04-ans-operadoras" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 05 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">SQL & Finanças</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">05. Sinistralidade com SQL</h3>
+            <p class="project-desc">Queries relacionais estruturadas para conciliação contábil e apuração de índice de sinistralidade (loss ratio).</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-05-sinistralidade-sql" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 06 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Analytics Avançado</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">06. Sinistralidade Avançada</h3>
+            <p class="project-desc">Identificação de procedimentos de alto custo, eventos atípicos e modelagem preditiva de tendências de sinistro.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-06-sinistralidade-avancado" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 07 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">BI & Visualização</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">07. Dashboard de Sinistralidade</h3>
+            <p class="project-desc">Construção de painel interativo em Power BI com indicadores executivos de custo assistencial e frequência de uso.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-07-dashboard-sinistralidade" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 08 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">SUSEP & Seguros</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">08. Dados de Seguros (SUSEP)</h3>
+            <p class="project-desc">Exploração do mercado segurador nacional avaliando prêmios emitidos, despesas comerciais e sinistros retidos.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-08-susep-seguros" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 09 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Regulação & Precificação</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">09. Mensalidade por Faixa Etária</h3>
+            <p class="project-desc">Avaliação dos limites regulatórios da ANS para dispersão de preços entre faixas etárias e riscos atuariais.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-09-mensalidade-faixa-etaria" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 10 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Estatística & Testes</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">10. Teste A/B em Saúde/Seguros</h3>
+            <p class="project-desc">Experimentação estatística com testes de hipóteses aplicados à redução de churn e conversão de planos.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-10-teste-ab" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 11 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Ferramentas & Qualidade</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">11. Sistema Utilitário de Dados</h3>
+            <p class="project-desc">Módulo em Python para validação cadastral, consistência e higienização de terminologias de saúde (TUSS).</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-11-sistema-util" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 12 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Engenharia & ETL</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">12. Pipeline Automatizado (ETL ANS)</h3>
+            <p class="project-desc">Fluxo automatizado de extração, descompactação, tratamento e carga incremental de microdados abertos da ANS.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-12-pipeline-ans" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+        <!-- Projeto 13 -->
+        <article class="project-card">
+          <div class="card-top">
+            <span class="card-category">Inteligência Artificial</span>
+            <span class="badge badge-progress">Em andamento</span>
+          </div>
+          <div class="card-content">
+            <h3 class="project-title">13. Agente de IA para Saúde</h3>
+            <p class="project-desc">Assistente analítico inteligente com IA para interpretação de regras regulatórias e consultas em dados da saúde.</p>
+          </div>
+          <a href="https://github.com/luistrindade2510/Entregas_Estudos/tree/main/projeto-13-agente-ia" target="_blank" rel="noopener noreferrer" class="btn-github">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver no GitHub
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Seção 4: Contatos
+       ========================================================================== -->
+  <section class="contact-section" id="contato">
+    <div class="container contact-container">
+      <div class="section-title-wrap" style="margin-bottom: 1.5rem;">
+        <span class="section-tag">Conexão</span>
+        <h2 class="section-title">Vamos Conversar?</h2>
+        <p class="section-subtitle">
+          Estou disponível para novas oportunidades como analista de dados, projetos analíticos e conexões nos segmentos de saúde suplementar e seguros.
+        </p>
+      </div>
+
+      <div class="contact-links">
+        <!-- GitHub -->
+        <a href="https://github.com/luistrindade2510" target="_blank" rel="noopener noreferrer" class="contact-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub (luistrindade2510)
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/luistrindade2510" target="_blank" rel="noopener noreferrer" class="contact-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Rodapé
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Luis. Portfólio de Análise de Dados — Saúde Suplementar & Seguros.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
